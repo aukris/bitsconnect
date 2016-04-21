@@ -1,0 +1,46 @@
+{% extends 'connect/base.html'%}
+
+
+{% block main %}
+
+
+<div class="container-fluid" style="margin-top:40px;">
+<div class="panel-group feed-panel-group">
+  {% if travel %}
+  {% for t in travel %}
+    <div class="panel panel-default panel-pos clearfix">
+    <div class="panel-heading"><span class="panel-title">{{t.from_place.name}}</span>
+    To <span class="panel-title">{{t.to_place.name}}</span> ON 
+    <span class="panel-title" style="color:#3386c9">{{t.date | date:"jS b, P"}}</span>
+    </div>
+    <div class="panel-body ">{{t.content|linebreaksbr}}</div>
+    <div class="panel-footer clearfix">
+    <a class="btn btn-danger btn-pos pull-right" onclick="alertNav('{% url 'deltravel' t.pk %}')">Delete Travel</a>
+    </div>
+    
+    </div>
+    {% endfor %}
+    {% else %}
+
+   <div class="panel panel-default panel-pos">
+    <div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+  </div>
+
+    {% endif %}
+
+</div>
+</div>
+{%  endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+function alertNav(url){
+	var answer = confirm ("Do you wish to delete this Travel Plan?")
+	if (answer)
+		window.location=url;
+	else
+		return
+}
+</script>
+
+{% endblock %}

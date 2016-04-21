@@ -1,0 +1,246 @@
+{% extends 'connect/base.html'%}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
+</script>
+
+<link href="
+https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker-standalone.css"> </link>
+
+
+{% endblock scripts %}
+
+{%load connect_extras %}
+
+{% block main %}
+
+<style>
+
+@media screen and (min-width: 1800px){
+ .search-panel{
+ position:relative;
+  padding:20px;
+  top:50px;
+  width:750px!important;
+  margin:auto;
+  margin-bottom:30px;
+
+}
+.modal-dialog{
+  width:40%!important;
+}
+  .form-group{
+  margin-left:30px;
+
+
+}
+
+}
+.modal-dialog{
+  width:50%;
+}
+
+.form-group{
+  margin-left:30px;
+}
+
+
+ .search-panel{
+ position:relative;
+  padding:5px;
+  top:20px;
+  width:700px;
+  margin:auto;
+  margin-bottom:50px;
+
+}
+.panel-pos{
+	margin:auto;
+	width:90%;
+margin-top:20px!important;
+}
+
+
+</style>
+
+
+
+
+<div class="container-fluid" >
+	{% if error %}
+	<div class="text-danger" style="text-align:center;">An error occured while creating travel plan. Please fill Up all fields before you submit.</div>
+	{% endif %}
+    <form id="searchForm" class="panel panel-default search-panel form-inline"   method="post" action="">
+    {% csrf_token %}
+   
+    <div class="panel-body">
+    	<div class="form-group">
+	    	<label for="my-location-search">From</label>
+			<select class="form-control" id="my-location-search" name="my-location">
+      {% for p in places %}
+			<option value={{p.pk}}>{{p.name}}</option>
+      {% endfor %}
+			</select>
+		</div>
+		<div class="form-group" >
+	    	<label for="destination-search" >To</label>
+			<select class="form-control" id="destination-search" name="destination">
+			{% for p in places reversed%}
+      <option value={{p.pk}}>{{p.name}}</option>
+      {% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+            <div class='input-group date' id='datetimepicker'>
+                <input type='text' name="date" class="form-control" value="{{date}}" required="true" readonly/>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" ></span>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-footer clearfix">
+    <div class="btn btn-primary pull-left" data-toggle="modal" data-target="#travelForm" >Add Travel</div>
+    <button  id="searchSubmit" class="btn btn-primary pull-right" value="Search" >Search</button>
+
+    </div>
+     <input type="text" value="search" name="type" style="display:none;"/>
+    </form>
+
+
+
+<div class="divider">
+</div>
+<div class="panel-group feed-panel-group">
+  {% if travel %}
+  {% for t in travel %}
+    <div class="panel panel-default panel-pos">
+    <div class="panel-heading"><span class="panel-title">{{t.from_place.name}}</span>
+    To <span class="panel-title">{{t.to_place.name}}</span>@
+    <span class="panel-title" style="color:#3386c9">{{t.date | date:"fA"}}</span>
+    <i class="glyphicon glyphicon-earphone text-success call-user pull-right" style="margin-top:5px;" data-user="{{t.user.username}}"> </i>
+    <span class=" panel-title pull-right " style="margin-bottom:5px; padding:0 5px 0;color:#337ab7;">{{t.user.first_name}}</span>
+
+    </div>
+    <div class="panel-body">{{t.content|linebreaksbr}}</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% if post %}
+   <div class="panel panel-default panel-pos">
+    <div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+  </div>
+  	{% endif %}
+    {% endif %}
+
+
+
+</div>
+<div id="travelForm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Your Travel Plan Here.</h4>
+      </div>
+      <form action="" id="createForm" role="form" method="post" class="form-inline">
+      <div class="modal-body clearfix ">
+        
+        {% csrf_token %}
+			
+			<div class="form-group">
+	    	<label >From</label>
+			<select class="form-control" id="my-location" name="my-location">
+			{% for p in places %}
+      <option value={{p.pk}}>{{p.name}}</option>
+      {% endfor %}
+			</select>
+		</div>
+		<div class="form-group" >
+	    	<label for="destination" >To</label>
+			<select class="form-control" id="destination" name="destination">
+			 {% for p in places reversed%}
+      <option value={{p.pk}}>{{p.name}}</option>
+      {% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' name="date" class="form-control" required readonly/>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" ></span>
+                </span>
+            </div>
+        </div>
+
+		
+				<textarea id="travel-description" placeholder="Please describe your travel plan briefly. Also Please provide your phone number. " style="margin-top:10px;width:100%;resize:none;"  class="form-control" name="description" maxlength="150" 
+				required></textarea>
+
+				<input name="type" value="create" style="display:none;"/> 
+		
+		 </div>	
+       <div class="modal-footer clearfix">
+       <input id="createSubmit" type="submit" class="btn btn-primary pull-right">
+       </div> 
+     
+      </form>
+   
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+        $(function() {              
+           // Bootstrap DateTimePicker v4
+           $('#datetimepicker2').datetimepicker({ignoreReadonly:true,
+            format: 'DD/MM/YYYY hh:mm A'
+           })
+           $('#datetimepicker').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                 ignoreReadonly:true
+           });
+        });
+
+      $("#searchSubmit").click(function(e){
+      	e.preventDefault()
+      	if($("#my-location-search").val() == $("#destination-search").val()){
+      		alert("Your location and destination cannot be the same")
+      		return
+      	}
+        if(!$("#datetimepicker input[type='text']").val()){
+          alert('please enter a valid date.')
+          return
+        }
+
+      	$("#searchForm").submit()
+      });
+
+
+
+      $("#createSubmit").click(function(e){
+      	e.preventDefault()
+      	if($("#my-location").val() == $("#destination").val()){
+      		alert("Your location and destination cannot be the same.")
+      		return
+      	}
+         if(!$("#datetimepicker2 input[type='text']").val()){
+          alert('please enter a valid date.')
+          return
+        }
+
+      	if (/\S/.test($("#travel-description").val())) {
+      		$("#createForm").submit()
+      	}
+      	else{
+      		alert("You need to add a description.")
+      		return
+      	}
+      	
+      });      
+</script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'connect/base.html'%}
+
+{% block main %}
+
+<div class="container-fluid" style="margin-top:40px;">
+
+	<div class="panel-group feed-panel-group">
+	{% if ads %}
+	{% for s in ads %}
+		<div class="panel panel-default ">
+		<div class="panel-heading"><h3 class="panel-title" >{{s.title}}</h3>
+		<span class="text-primary" title="{{s.user.username}}" style="cursor:pointer;">{{s.user.first_name}}</span><i class="text-success glyphicon glyphicon-earphone call-user" data-user="{{s.user}}"></i></div>
+		<div class="panel-body">{{s.content|linebreaksbr}}</div>
+		</div>
+	{% endfor %}
+
+	{% else %}
+	<div class="panel panel-default">
+		<div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+	</div>
+	{% endif %}
+		
+	</div>
+</div>
+
+
+{%endblock main %}

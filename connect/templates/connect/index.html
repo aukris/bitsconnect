@@ -1,0 +1,177 @@
+
+{% extends 'connect/about.html'%}
+{% load static from staticfiles %}
+
+
+{% block modals %}
+
+
+<!-- Modal -->
+<div id="loginModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:30%;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body clearfix">
+			<form id="loginForm" >
+			 <p id="error-text-login" style="color:#a94442;text-align:center;">
+     		 </p>
+			<div class="form-group">
+			<input type="text" name="username" id="username-login" placeholder="Username" class="form-control" required/></div>
+			<div class="form-group"> 
+			<input type="password" name="password" id="password-login"  placeholder="Password"  class="form-control" required/>
+			</div>
+			<div class="row container-fluid">
+			<p id="forgot-pass-btn" class="col-md-9"  style="cursor:pointer;">I forgot my Password!</p>
+			<input type="submit" class="pull-right btn btn-primary  col-md-2" value="Login"  >
+			</div>
+			</form>
+		
+
+					
+			
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="registerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:30%;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Register</h4>
+      </div>
+      <p id="error-text" style="color:#a94442;text-align:center;">
+      </p>
+      <div class="modal-body clearfix">
+        <form method="post" role="form" action="{% url 'register' %}" id="register-form" >
+			{% csrf_token %}
+			<div class="form-group">
+			<input type="text"   class="form-control" id="register-username" name="username" placeholder="Username ex.f2014403" required/>
+			</div>
+			<div class="form-group"> 
+			<input type="text" class="form-control"	 name="nickname" id="register-name" placeholder="Your real name" required/>
+			</div>
+				
+
+			<input id="register-submit" class="btn btn-primary pull-right" type="submit"  value="Create Account">
+		</form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="forgot-pass" class="modal fade" role="dialog" >
+	  <div class="modal-dialog" style="width:30%;">
+
+	    <!-- Modal content-->
+	    <div class="modal-content" >
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Forgot Password ?</h4>
+	      </div>
+	      <div class="modal-body clearfix">
+	        <form action="{% url 'forgot-pass' %}" role="form" method="post">
+	 			{% csrf_token %}
+				<div class="form-group">
+					<input type="text" placeholder="Username ex. f2014403" title="Enter your BITS ID" pattern="[fh]201[0-9]{4}"  class="form-control" name="username" style="resize:none;" required/>
+				</div>
+				<input type="submit" value="Email Password" class="btn btn-primary pull-right">
+	        </form>
+	      </div>
+
+	    </div>
+
+	  </div>
+</div>
+
+{% endblock %}
+
+{% block nav%}
+<li class=""><a  data-toggle="modal" data-target="#loginModal">Login</a></li>
+
+<li class=""><a  data-toggle="modal" data-target="#registerModal" >Register</a></li>
+{% endblock %}
+
+			
+{% block scripts%}
+<script>
+$("#forgot-pass-btn").click(function(e){
+	$("#loginModal").modal('hide')
+	$("#forgot-pass").modal('show')
+})
+$("#forgot-pass").on('hidden.bs.modal', function () {
+		$('body').css('padding-right','0px') //modal is fucking up
+	});
+
+
+$("#register-submit").click(function(e){
+	e.preventDefault()
+	var username = $("#register-username").val()
+	var name = $("#register-name").val()
+	var pat = /^[fh]201[0-9]{4}$/
+	if (!pat.test(username)){
+		$("#error-text").text("Please input BITS username.");
+		return
+	}
+	else if (name.length < 7){
+		$("#error-text").text("Your name has to be atleast 6 characters.");
+		return
+	}
+	else{
+		$("#register-form").submit()
+	}
+});
+
+$("#loginForm").submit(function (event){
+event.preventDefault()
+username = $("#username-login").val()
+password = $("#password-login").val()
+if (! (username && password)){
+	$("#error-text-login").text("Please fill in both your username and password.")
+	return
+}
+dat = {'username':username, 'password':password }
+$.ajax({
+type: "POST",
+url: "{% url 'login' %}",
+data: dat,
+beforeSend: function(xhr){
+    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+},
+success: function (data) {
+window.location="/"
+},
+error: function (data){
+	data = data.responseText
+    if(data == '1'){
+    	$("#error-text-login").text("Incorrect password!")
+    }
+    else if(data == '2'){
+    	$("#error-text-login").text("You need to register first.")
+    }
+    else if(data == '3'){
+    	$("#error-text-login").text("Your account has been locked.")
+    }
+    else{
+    	$("#error-text-login").text("Unknown error. Please try again later.")	
+    }
+}
+});
+
+});
+
+
+
+</script>
+{% endblock scripts%}

@@ -1,0 +1,92 @@
+{% extends 'connect/base.html'%}
+
+{% block scripts %}
+<script>
+function toggleLikeStatus(obj){
+  if (obj.data('status') == 1){
+    obj.data('status',0)
+    obj.removeClass('like')
+    vote = parseInt(obj.siblings('.vote-count').html())
+    vote-=1
+    obj.siblings('.vote-count').html(vote)
+  }
+  else if (obj.data('status') == 0){
+    obj.data('status',1)
+    obj.addClass('like')
+    vote = parseInt(obj.siblings('.vote-count').html())
+    vote+=1
+    obj.siblings('.vote-count').html(vote)
+  }
+}
+$(".vote").on('click',function(event){
+  status = $(event.target).data('status')
+  id = $(event.target).data('id')
+  status = 1-status
+  toggleLikeStatus($(event.target))
+  var url = '/problem/vote/'
+  var parameters = {'p_id':id}
+   
+    
+
+    $.ajax({
+              "type": "POST",
+              "url": url,
+              "data": parameters,
+              "error": function(xhr,text,errorobj){
+                //console.log('error'+xhr.responseText)
+                toggleLikeStatus($(event.target))  
+              },
+              "success": function(result) {
+                  if(result != '1'){
+                    toggleLikeStatus($(event.target))
+                  }
+             }    
+          });
+});
+</script>
+
+{% endblock %}
+
+{%load connect_extras %}
+
+{% block main %}
+
+
+
+
+<ul class="nav nav-tabs">
+  <li class="active" ><a href="{% url 'problems' bhavan %}">Unsolved - {{bhavan}}</a></li>
+  <li ><a href="{% url 'problems_solved' bhavan %}">Solved - {{bhavan}}</a></li>
+  <li ><a href="{% url 'myproblems' bhavan %}">My Problems - {{bhavan}}</a></li>
+</ul>
+<div class="container-fluid" style="margin-top:40px;">
+
+  <div class="panel-group feed-panel-group">
+  {% if problems %}
+  {% for s in problems %}
+    <div class="panel panel-default">
+    <div class="panel-heading clearfix"><h3 class="panel-title" >{{s.title}}</h3>
+    <span class="text-primary" title="{{s.user.username}}" style="cursor:pointer;">{{s.user.first_name}}</span><i  class="text-success glyphicon glyphicon-earphone call-user" data-user="{{s.user}}"></i>
+    <span class="text-muted pull-right">posted on {{s.created | date:'jS, M Y'}}</span>
+    </div>
+    <div class="panel-body">{{s.content|linebreaksbr}}</div>
+    <div class="panel-footer clearfix">
+
+    {% fav_status s.id %}
+    <span style="margin-left:5px;margin-top:3px;" class="badge vote-count">{{s.votes}}</span>
+    {% if perms.connect.problem_solve %}
+    <a class="btn btn-primary pull-right" href="{% url 'solve_problem' s.pk %}" >Solve</a>
+    {% endif %}
+    </div>
+    </div>
+  {% endfor %}
+  {% else %}
+  <div class="panel panel-default">
+    <div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+  </div>
+  {% endif %}
+    
+  </div>
+
+</div>
+{% endblock %}

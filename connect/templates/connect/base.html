@@ -1,0 +1,254 @@
+<html>
+<head>
+<title>BITS CONNECT</title>
+{% load static from staticfiles %}
+<meta charset="utf-8">
+<meta name="description" content="Connecting BITSians like never before">
+<meta name="keywords" content="BITS CONNECT">
+<link rel="canonical" href="bitsconnect.pythonanywhere.com" />
+<link rel="icon" type="image/png" href="{% static 'connect/favicon.png' %}">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js
+"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="{% static 'connect/nav_style.css' %}"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+<style>
+
+@media screen and (min-width: 1800px){
+body{
+  font-size:22px;
+}
+
+.dropdown-menu{
+  font-size:20px;
+}
+nav.sidebar{
+  width:15%!important;
+}
+
+}
+
+
+
+.call-user{
+  padding-left:10px;
+  cursor:pointer;
+}
+.main{
+  background:#eee;
+  min-height:100%;
+  
+}
+.heading-caption{
+  font-weight:700;
+  text-transform: uppercase;
+  color:#ee4b28!important;
+}
+.vote{
+cursor:pointer;
+}
+.like{
+  color:#337ab7;
+}
+
+
+
+.feed-panel-group .panel{
+  margin:auto!important; 
+  width:75%;
+  margin-bottom:25px!important;
+
+  padding:5px;
+}
+.feed-panel-group  .panel-body{
+  font-size: 1em;
+font-family: 'Source Sans Pro', sans-serif;
+}
+
+.feed-panel-group .panel-title{
+  font-size:1.2em;
+  color:#ee4b28!important;
+font-family: 'Source Sans Pro', sans-serif;
+}
+
+.list-group-item{
+font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+</style>
+<script type="text/javascript">
+    function htmlbodyHeightUpdate(){
+    var height3 = $( window ).height()
+    var height1 = $('.nav').height()+50
+    height2 = $('.main').height()
+    if(height2 > height3){
+      $('html').height(Math.max(height1,height3,height2)+10);
+      $('body').height(Math.max(height1,height3,height2)+10);
+    }
+    else
+    {
+      $('html').height(Math.max(height1,height3,height2));
+      $('body').height(Math.max(height1,height3,height2));
+    }
+    
+  }
+  $(document).ready(function () {
+    htmlbodyHeightUpdate()
+    $( window ).resize(function() {
+      htmlbodyHeightUpdate()
+    });
+    $( window ).scroll(function() {
+      height2 = $('.main').height()
+        htmlbodyHeightUpdate()
+    });
+  });
+
+$(document).ready(function() {
+
+
+    var csrftoken = $.cookie('csrftoken');
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+});
+
+
+</script>
+
+
+
+</head>
+<body>
+
+
+
+{% load connect_extras %}
+<nav class="navbar navbar-inverse sidebar " style="position:fixed;" role="navigation">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+        <span class="sr-only">nav</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" style="color:white;" href="{% url 'view_about' %}" target='_blank'>BITS CONNECT</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li class="{% navactive request 'home' %}"><a href="/">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+
+        <li class="{% navactive request 'bits_line' %}"><a id="bits-line-link" href="#" >BITS Line<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-earphone"></span></a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">P.R.S<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-alert"></span></a>
+          <ul class="dropdown-menu forAnimate" role="menu">
+          <li><a href="{% url 'problems' 'BITS' %}">BITS</a></li>
+            <li><a href="{% url 'problems' 'SR' %}">SR</a></li>
+            <li><a href="{% url 'problems' 'KG' %}">KR/GN</a></li>
+            <li><a href="{% url 'problems' 'SV' %}">SK/VY</a></li>
+            <li><a href="{% url 'problems' 'MR' %}">MR</a></li>
+            <li><a href="{% url 'problems' 'RB' %}">RM/BD</a></li>
+            <li><a href="{% url 'problems' 'RPA' %}">RPA</a></li>
+            <li><a href="{% url 'problems' 'VKB' %}">VKB</a></li>
+            <li><a href="{% url 'problems' 'CVR' %}">CVR</a></li>
+            <li><a href="{% url 'problems' 'ML' %}">ML/MLE</a></li>
+          </ul>
+        </li>
+        
+         <li  class="dropdown {% navactive request 'services myservices' %}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a>
+          <ul class="dropdown-menu forAnimate" role="menu">
+            <li><a href="{% url 'services' %}">Services</a></li>
+            <li><a href="{% url 'myservices' %}">My Services</a></li>
+          </ul>
+        </li>
+
+          <li  class="dropdown {% navactive request 'ads myads' %}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">BITS Trade  <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-bullhorn"></span></a>
+          <ul class="dropdown-menu forAnimate" role="menu">
+            <li><a href="{% url 'ads' %}">Buy here</a></li>
+            <li><a href="{% url 'myads' %}">Sell Here</a></li>
+          </ul>
+        </li>
+
+
+        <li  class="dropdown {% navactive request 'travel' %}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Travel<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plane"></span></a>
+          <ul class="dropdown-menu forAnimate" role="menu">
+            <li><a href="{% url 'travel' %}">Search</a></li>
+            <li><a href="{% url 'mytravel' %}">My Travel</a></li>
+          </ul>
+        </li>
+
+        
+        
+        <li class="{% navactive request 'calendar' %}"><a href="{% url 'calendar' %}">Calendar<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a></li>
+        
+        
+        
+
+
+        <li ><a href="{% url 'logout' %}">Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="main">
+{% block main %}
+{% endblock main %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+</div> 
+<script type="text/javascript">
+function local(key, value) {
+    if (value === undefined) {
+        return key in localStorage ? JSON.parse(localStorage[key]) : undefined;
+    } else {
+        localStorage[key] = JSON.stringify(value);
+        return value;
+    }
+}
+
+var GLOBAL_BITS_LINE_WINDOW
+var USER_BITS_LINE_WINDOW
+$(".main").on('click','.call-user',function(event){
+  user = $(event.target).data("user")
+  if(GLOBAL_BITS_LINE_WINDOW){
+    GLOBAL_BITS_LINE_WINDOW.close()
+  }
+  if (USER_BITS_LINE_WINDOW){
+    USER_BITS_LINE_WINDOW.close()
+  }
+  USER_BITS_LINE_WINDOW =  window.open({% url 'bits_line' %} + '?partner_id='+ user) 
+})
+$("#bits-line-link").click(function(){
+ if(GLOBAL_BITS_LINE_WINDOW){
+    GLOBAL_BITS_LINE_WINDOW.close()
+  }
+  if (USER_BITS_LINE_WINDOW){
+    USER_BITS_LINE_WINDOW.close()
+  }
+   GLOBAL_BITS_LINE_WINDOW =  window.open({% url 'bits_line' %})
+})
+</script> 
+</body>
+</html>

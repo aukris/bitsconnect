@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Sent</title>
+<style>
+body,html{
+	background-color:#ccc;
+}
+.box{
+	position:absolute;
+	margin:auto;
+	top:10%;
+	left:25%;
+	background-color:white;
+	width:50%;
+	font-size:18px;
+	padding:20px;
+	box-shadow: 3px 3px 3px grey;
+
+}
+p{
+	font-family: "Arial", Times, serif;
+	color:#567321;
+}
+</style>
+</head>
+<body >
+ {% load static %}
+<div class="box">
+<img src="{% static 'connect/mail.jpg' %}" style="margin-left:auto;margin-right:auto;display:block;"/>
+<p>
+The password has been sent to your Bits email account.Please login with your credentials here.
+</p>
+<a href="{% url 'home' %}">Login</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+{% extends 'connect/base.html'%}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
+</script>
+
+<link href="
+https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker-standalone.css"> </link>
+
+
+<script>
+
+$(function () {
+                $('#datetimepicker1').datetimepicker({ignoreReadonly:true, format: 'DD/MM/YYYY hh:mm A'});
+            });
+
+</script>
+
+<style>
+.col-md-2{
+	padding-left:70px;
+}
+</style>
+{% endblock scripts %}
+{% block main %}
+<div class="row">
+<div class="col-md-12">
+{% if perms.connect.event_add %}
+{% if post %}
+{% if error %}
+<span class="text-danger">Submit failed!!!.Please Check carefully for errors before submiting.</span>
+{% else %}
+<span class="text-success">Successfully created Event.Please Do not resubmit the form as this might create multiple entries.</span>
+{% endif %}
+{% endif %}
+{% endif %}
+
+<br/>
+<div>
+{% if perms.connect.event_add %}
+<a class="btn btn-primary pull-right" data-toggle="modal" data-target="#eventForm" >Add Event</a>
+<!-- Modal -->
+<div id="eventForm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Events Here.</h4>
+      </div>
+      <div class="modal-body clearfix">
+        <form action="" role="form" method="post">
+        {% csrf_token %}
+			<div class="form-group">
+				<label for="email">Title:</label>
+				<textarea  class="form-control" name="title" maxlength="150" style="resize:none;" required></textarea>
+			</div>
+			<div class="form-group">
+			<div class='input-group date' id='datetimepicker1' >
+                    <input type='text' name="date_time" class="form-control" required readonly/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+			</div>
+			<input type="submit" class="btn btn-primary pull-right">
+        </form>
+      </div>
+   
+    </div>
+
+  </div>
+</div>
+
+{% endif %}
+<a href="{% url 'calendar'%}?week=-1" class="btn btn-danger {% if week == -1%}active{% endif %}">Last Week</a>
+<a href="{% url 'calendar'%}" class="btn btn-danger {% if week == 0%}active{% endif %}">This Week</a>
+<a href="{% url 'calendar'%}?week=1" class="btn btn-danger {% if week == 1%}active{% endif %}">Next Week</a>
+<a href="{% url 'calendar'%}?week=2" class="btn btn-danger {% if week == 2%}active{% endif %}">Week After</a>
+</div>
+<p style="text-align:center;font-weight:bold;font-size:18px;">
+{{first_day|date:'jS'}} - {{last_day|date:'jS'}}
+</p>
+<br/>
+
+
+
+</div>
+</div>
+<ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#menu1">Monday</a></li>
+    <li><a data-toggle="tab" href="#menu2">Tuesday</a></li>
+    <li><a data-toggle="tab" href="#menu3">Wednesday</a></li>
+    <li><a data-toggle="tab" href="#menu4">Thursday</a></li>
+    <li><a data-toggle="tab" href="#menu5">Friday</a></li>
+    <li><a data-toggle="tab" href="#menu6">Saturday</a></li>
+    <li><a data-toggle="tab" href="#menu7">Sunday</a></li>
+
+  </ul>
+
+  <div class="tab-content">
+    <div id="menu1" class="tab-pane fade in active">
+		<div class='list-group'>
+			{% if not mon%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in mon%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2  " style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+	</div>
+    <div id="menu2" class="tab-pane fade">
+      <div class='list-group'>
+      		{% if not tue%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in tue%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2  " style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <div class='list-group'>
+      		{% if not wed%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in wed%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2  " style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+    </div>
+    <div id="menu4" class="tab-pane fade">
+      <div class='list-group'>
+      		{% if not thu%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in thu%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2  " style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+    </div>
+    <div id="menu5" class="tab-pane fade">
+      <div class='list-group'>
+      		{% if not fri%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in fri%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2  " style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+    </div>
+    <div id="menu6" class="tab-pane fade">
+      <div class='list-group'>
+      		{% if not sat%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in sat%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2  " style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+    </div>
+    <div id="menu7" class="tab-pane fade">
+      <div class='list-group'>
+      		{% if not sun%}
+			<div class="list-group-item col-md-12 text-warning text-center">Nothing to display</div>
+			{% endif %}
+			{% for event in sun%}
+			<div class="list-group-item col-md-10 text-info">{{event.title}}</div>
+			<div class="list-group-item col-md-2" style="background-color:#560000;color:#fff;">
+			{{event.time|date:'P'}}</div>
+			{% endfor %}
+		</div>
+    </div>
+  
+</div>
+
+{%endblock main %}

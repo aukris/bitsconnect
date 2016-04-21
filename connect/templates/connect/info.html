@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Sent</title>
+<style>
+body,html{
+	background-color:#ccc;
+}
+.box{
+	position:absolute;
+	margin:auto;
+	top:10%;
+	left:25%;
+	background-color:white;
+	width:50%;
+	height:100px;
+	font-size:18px;
+	padding:20px;
+	box-shadow: 3px 3px 3px grey;
+
+}
+p{
+	font-family: "Arial", Times, serif;
+	color:#567321;
+}
+</style>
+</head>
+<body >
+<div class="box">
+<p>
+{{msg}}
+</p>
+<a href="{% url 'home' %}">Home</a>
+</div>
+</body>
+</html>

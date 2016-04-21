@@ -1,0 +1,159 @@
+{% extends 'connect/base.html'%}
+
+{% block scripts %}
+<script>
+$("#password-2, #password-1, #password ").on('keyup', function(){
+    if ($('#password-1').val() == $("#password-2").val() && $('#password-1').val().length > 7 && $('#password').val().length >7){ //minChar:8
+        console.log('hi')
+        $("#submit-btn").prop('disabled', false)
+    }
+    else{
+        $("#submit-btn").prop('disabled', true)
+    }
+})
+</script>
+<style>
+.carousel-indicators li {
+  background-color: rgba(70,70,70,.25);
+  border:.2em solid yellow;
+}
+
+.carousel-indicators .active {
+  background-color: #222;
+}
+
+.main-text
+{
+    position: absolute;
+    top: 50px;
+    width: 96.66666666666666%;
+    color: #FFF;
+}
+.btn-min-block
+{
+    min-width: 170px;
+    line-height: 26px;
+}
+.btn-clear
+{
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+.btn-clear:hover
+{
+    color: #000;
+    background-color: #FFF;
+}
+
+
+
+.main{
+	height:100%;
+    overflow:hidden;
+}
+
+.carousel-inner img{
+    height:90%!important;
+    max-width:100vw!important;
+    margin-left:auto;
+    margin-right:auto;   
+
+}
+.carousel{
+    margin-left:auto;
+    margin-right:auto;
+    position: relative;
+    left:-15px;   
+}
+
+.carousel-caption p{
+    font-size:20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: bold;
+}
+
+</style>
+
+{% endblock %}
+
+{% block main %}
+<nav class="navbar navbar navbar-default">
+  <div class="container-fluid">
+  <div class="navbar-header">
+    <div class="navbar-brand heading-caption">
+      Events Coming up
+      </div>
+    </div>
+    <div class="navbar-header pull-right">
+    <div class="navbar-brand">
+      Welcome, {{request.user.first_name}} <span data-target="#password-reset" data-toggle="modal" style="font-size:16px;margin-left:10px;cursor:pointer;" class="pull-right hidden-xs showopacity glyphicon glyphicon-edit"></span>
+      </div>
+    </div>
+   </div>
+</nav>
+  <div id="password-reset" class="modal fade" role="dialog" >
+      <div class="modal-dialog" style="width:30%;">
+
+        <!-- Modal content-->
+        <div class="modal-content" >
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">You will be logged out if reset is successful</h4>
+          </div>
+          <div class="modal-body clearfix">
+            <form action="{% url 'reset-pass' %}" role="form" method="post">
+            {% csrf_token %}
+          <div class="form-group">
+          <label>Old Password:</label>
+            <input id="password" pattern=".{8,}" title="8 or more characters" placeholder="password" type="password" class="form-control" name="oldpassword" style="resize:none;" required/>
+          </div>
+          <div class="form-group">
+          <label>New Password:</label>
+            <input id="password-1" pattern=".{8,}" title="8 or more characters" placeholder="password" type="password" class="form-control" name="newpassword" style="resize:none;" required/>
+          </div>
+          <div class="form-group">
+          <label>Confirm Password:</label>
+            <input id="password-2" pattern=".{8,}" title="8 or more characters" placeholder="password" type="password" class="form-control" name="newpassword" style="resize:none;" required/>
+          </div>
+          <input id="submit-btn" type="submit" value="Reset Password" class="btn btn-primary pull-right " disabled>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+  </div>
+<div class="container">
+    <div class="row"  >
+        <div class="col-md-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                {% for e in events%}    
+            <li data-target="#carousel-example-generic" data-slide-to="{{forloop.counter0}}" class="{% if e.forloopcounter0 == 0%}active{% endif %}"></li>
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                
+                    {% for e in events%}
+                   
+                    <div class="item {% if forloop.counter == 1%}active {% endif %}">
+                        <img src="/media/{{e.image}}" alt="Third slide">
+                         <div class="carousel-caption" style='position:absolute;top:-1vh;'>
+                         <p>{{e.title}}</p>
+                </div>
+                    </div>
+                    {% endfor %}
+                
+                </div>
+     
+            </div>
+            <div class="main-text hidden-xs">
+           
+        </div>
+    </div>
+</div>
+<div id="push">
+</div>
+{%endblock main %}

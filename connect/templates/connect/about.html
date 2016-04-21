@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BITS CONNECT</title>
+<meta charset="utf-8">
+<meta name="description" content="Connecting BITSians like never before">
+<meta name="keywords" content="BITS CONNECT">
+<link rel="canonical" href="bitsconnect.pythonanywhere.com" />
+{% load static from staticfiles %}
+<link rel="icon" type="image/png" href="{% static 'connect/favicon.png' %}">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js
+"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+<!-- Libs CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.3.0/flexslider.css" type="text/css" media="screen">
+	<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.3.0/jquery.flexslider.js"></script>
+	<!-- Template CSS -->
+	<link href="{% static 'connect/landing_style.css' %}" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
+
+
+
+</head>
+
+<body>
+{% block modals %}
+{% endblock %}
+
+<div id="banner" >
+		<!-- Start Header -->
+		<div id="header">
+
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> 
+				<div class="container-fluid" style="margin-top:10px;">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<!-- Start Logo / Text -->
+						<a class="navbar-brand text-logo" href=""><div class="logo-text"></div></a>
+						<!-- End Logo / Text -->
+					</div>
+					<!-- Start Navigation -->
+					<div class="navigation navbar-collapse collapse" style="height: 0px;">
+						<ul class="nav navbar-nav menu-right scroll">
+							<li ><a href="#banner">Home</a></li>
+							<li class=""><a href="#features">Features</a></li>
+							
+                            <li class=""><a href="#disclaimer">Disclaimer</a></li>
+                            <li class=""><a href="#faq">FAQ</a></li>
+                            <li class=""><a href="#contact">Contact</a></li>
+                            {% block nav %}
+							{% endblock %}
+					
+						</ul>
+					</div>
+					<!-- End Navigation  -->
+				</div>
+			</nav>
+		</div>
+		<!-- End Header -->
+		<div class="banner-content">
+			<div class="container">
+					<!-- Start Header Text -->
+					<div class="margintop30">
+						<!-- <img src="img/logo.png" class="logo-big"> -->
+						<h1 class="heading">BITS CONNECT</h1>
+						<div class="quote-container"></div>
+					</div>
+			
+			</div>
+		</div>
+	</div>
+
+		<!-- Features Section -->
+	<section id="features" class="section50">
+		<div class="container">
+
+					<div class="row">
+				<div class="col-lg-12">
+					<div class="headline">
+						<h2>Features</h2>
+						<!-- <p class="header-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquando posse.</p> -->
+					</div>
+				</div>
+			</div>
+
+					<div class="row">
+
+						<!-- FEATURES LEFT -->
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<ul class="features-list features-list-left">
+								<li class="features-list-item">
+									<h5>BITS Line</h5>
+									<p class="">BITS Pilani's very own Skype where you can Connect with fellow BITSians, free of cost just using just your BITS ID! Video chatting just became a whole lot easier.</p>
+								</li>
+									<li class="features-list-item">
+									<h5>Calendar</h5>
+									<p>Ever missed out on the happening events on campus? Calendar is a two-way street giving Clubs, Departments &amp; Regional Assocs a channel to publicize their upcoming events and ensuring you don't miss out on another minute of action on campus.</p>
+								</li>
+								<li class="features-list-item">
+									<h5>Services</h5>
+									<p>Make a poster, Learn to code or Master an instrument.Services provides you with the perfect platform to connect with experts
+									</p>
+								</li>
+							
+								
+								
+							</ul>
+						</div>
+
+						<!-- FEATURES RIGHT -->
+						<div class="col-md-4 col-md-push-4 col-sm-4  col-xs-4">
+							<ul class="features-list features-list-right wow fadeInRight" data-wow-duration="1s">
+								<li class="features-list-item">
+									<h5>Problem Redressal System (P.R.S)</h5>
+									<p>Have you ever felt that your concerns have fallen on deaf ears? P.R.S provides you with the perfect opportunity to connect with your Student Representatives helping you voice your concerns and seek solutions in an efficient manner.</p> 
+								</li>
+									<li class="features-list-item">
+									<h5>BITS Trade</h5>
+									<p>Ever faced a problem buying a trunk or selling your books? BITS Trade is your one stop destination for Buying and Selling.</p>
+								</li>
+
+								<li class="features-list-item">
+									<h5>Travel Planner</h5>
+									<p>Looking for company on your next trip to Delhi or Jaipur? Look no further, Travel Planner will put you in touch with fellow BITSians to make your journey easier.</p>
+								</li>
+
+							</ul>
+						</div>
+
+			
+						<div class="col-md-4 col-md-pull-4  col-xs-4 col-sm-4">
+		
+
+
+
+
+							<div class="flexslider group" id="features-slider">
+                        
+
+
+                    <ul class="slides group">
+
+                            </li>
+                            <li class="group flex-active-slide" >
+																<p><img src="{% static 'connect/screenshot1.png' %}" class="feature_img" alt="" draggable="false"></p>
+
+                            </li>
+                        <li class="group clone" aria-hidden="true" >
+																<p><img src="{% static 'connect/screenshot2.png' %}" class="feature_img" alt="" draggable="false"></p>
+
+                        </li>
+
+                            </ul>
+
+        
+
+                            </div>
+
+
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+	</section>
+	<!-- End Section -->
+
+
+	<!-- disclaimer Section -->
+	<section id="disclaimer" class="section-plain">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="headline">
+						<h2>Disclaimer</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12" style="text-align:center;">
+					
+					<div class="flexslider" id="disclaimer-slider">
+						<ul class="slides">
+
+							<li>
+							<p>
+							The administrators are constantly monitoring the website.<br>
+We strictly condemn material, that is obscene, defamatory, threatening, harassing, abusive, hateful or embarrassing to any other user.<br>If anyone is found guilty of posting such material their account will be deactivated immediately and they will be reported to the Institute.</p>
+							</li>
+							<li>
+							<p>
+							The views and opinions expressed on the website do not necessarily represent those of the administrators and we do not claim responsibility for the same.Responsibility for anything posted on the website lies solely with the user.
+							</p>
+							</li>
+						</ul>
+					</div>
+
+                    </div>
+										
+										<!-- <a class="btn tut-reg">Complete FAQ</a> -->
+				</div>
+			</div>
+	</section>
+	<!-- End Section -->
+
+
+	<!-- disclaimer Section -->
+	<section id="faq" class="section50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="headline">
+						<h2>FAQ</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12" style="text-align:center;">
+					
+					<div class="flexslider" id="faq-slider">
+						<ul class="slides">
+
+							<li>
+							<h2>How can Clubs/Departments/Assocs publicize their events?</h2>
+							<p>There are two ways to publicize events on BITS Connect. Clubs/Departments/Assocs are provided with a separate account with special privileges to add events. Members of the concerned bodies can access the Calendar in order to add events. Posters/images can also be displayed on the front page by contatcting the administrator(s).</p>
+							</li>
+
+							<li>
+							<h2>What is P.R.S. and how do I use it?</h2>
+							<p>The Problem Redressal System(P.R.S.) is a platform where you can post problems pertaining to your Bhawan, or the campus in general; This provides student representatives an opportunity to resolve these issues. P.R.S. is divided into several forums, each tackling issues related to the respective hostel. In addition, there is a Global forum for issues affecting campus welfare.</p>
+							</li>
+
+							<li>
+							<h2>How do I make sure that my problem is addressed?</h2>
+							<p>Once you've posted your problem, other BITS Connect users can upvote it to echo your concerns(similar to Facebook's 'Like' feature). Problems shall be sorted by the number of upvotes they gather, making sure that the most important issues are tackled the earliest.</p>
+							</li>
+
+							<li>
+							<h2>I am a Student Represenative, how can I convey to others that their problem has been addressed?</h2>
+							<p>Student Representives' accounts will be given special privileges to convey to people that the problem has been dealt with and give details about how it has been solved. This is how Student Representatives can stay in touch with the students and make the whole system effecient and transparent.
+							</p>
+							</li>
+
+							<li>
+							<h2>What are the services that can normally be offered on the website?</h2>
+							<p>Services are not offered but rather requested for. They could include requests for people profecient in various fields such as music, web/app developement, designing on photoshop/illustrator to give lessons or help out with any other NON-ACADEMIC assignment. Another feature that Clubs/Departments/Assocs can benefit from is freelancing their poster designs, content writing or any other such assignment.
+							</p>
+							</li>
+
+							<li>
+							<h2>How does BITS Travel work?</h2>
+							<p>BITS Travel is a portal where people travelling to prime desitnations like Delhi, Jaipur and Chandigarh can find others to travel with. Post your travel plans with a brief description including contact details, time of travel and then wait for a response.
+							</p>
+							</li>
+							
+							
+
+						</ul>
+					</div>
+
+                    </div>
+										
+									
+				</div>
+			</div>
+	</section>
+	<!-- End Section -->
+
+
+
+	<section id="contact" class="section-footer	">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="headline">
+						<h2>Contact Us</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3" style="text-align:center;">
+					<i class="glyphicon  glyphicon-camera"></i><br>
+					<img class="contact-image" src="{% static 'connect/profile_nambu.jpg' %}"/><br>
+					<img class="contact-image" src="{% static 'connect/profile_akshay.jpg' %}"/><br>
+					<img class="contact-image" src="{% static 'connect/profile_bikram.jpg' %}"/><br>
+					<img class="contact-image" src="{% static 'connect/profile_manas.jpg' %}"/><br>
+					<img class="contact-image" src="{% static 'connect/profile_vasu.jpg' %}"/><br>
+					<img class="contact-image" src="{% static 'connect/profile_rajas.jpg' %}"/><br>
+					<img class="contact-image" src="{% static 'connect/profile_abhijith.jpg' %}"/><br>
+				</div>
+				<div class="col-md-3" style="text-align:center;">
+					<i class="glyphicon glyphicon-user"></i>
+					<p >Sidhartha Namburi</p>
+					<p >Akshay Anand</p>
+					<p >Bikram Bisht</p>
+					<p >Manas Luthra</p>
+					<p >Vasu Sharma</p>
+					<p >Rajas Pandey</p>
+					<p >Abhijith Unnikrishnan</p>
+				</div>
+				<div class="col-md-3" style="text-align:center;">
+					<i class="glyphicon glyphicon-earphone"></i>
+					<p>+91 99-28-814213</p>
+					<p>+91 99-28-059134</p>
+					<p>+91 99-83-962095</p>
+					<p>+91 76-89-969333</p>
+					<p>+91 99-29-010308</p>
+					<p>+91 98-29-769686</p>
+					<p>+91 98-28-617871</p>
+				</div>
+				<div class="col-md-3" style="text-align:center;">
+					<i class="glyphicon glyphicon-envelope"></i>
+					<p ><a href="mailto:f2014425@pilani.bits-pilani.ac.in">f2014425@pilani.bits-pilani.ac.in</a></p>
+					<p ><a href="mailto:f2014665@pilani.bits-pilani.ac.in">f2014665@pilani.bits-pilani.ac.in</a></p>
+					<p ><a href="mailto:f2014433@pilani.bits-pilani.ac.in">f2014433@pilani.bits-pilani.ac.in</a></p>
+					<p ><a href="mailto:f2014575@pilani.bits-pilani.ac.in">f2014575@pilani.bits-pilani.ac.in</a></p>
+					<p ><a href="mailto:f2014374@pilani.bits-pilani.ac.in">f2014374@pilani.bits-pilani.ac.in</a></p>
+					<p ><a href="mailto:f2014528@pilani.bits-pilani.ac.in">f2014582@pilani.bits-pilani.ac.in</a></p>
+					<p ><a href="mailto:f2014403@pilani.bits-pilani.ac.in">f2014403@pilani.bits-pilani.ac.in</a></p>
+				</div>
+			</div>
+
+
+
+			</div>
+	</section>
+
+	<section class="footer">
+	<h3>
+	A SIDHARTHA NAMBURI INITIATIVE
+	</h3>
+	</section>
+
+
+						
+</body>
+
+<script>
+$(".navbar-nav a[href^='#']").click(function(e) {
+    e.preventDefault();
+    $('body').animate({
+        scrollTop: $(this.hash).offset().top-40
+    }, 1000);
+});
+
+
+
+$(window).scroll(function(){
+	"use strict";
+	var scroll = $(window).scrollTop();
+	if( scroll > 20 ){
+		$(".navbar").addClass("scroll-fixed-navbar",100);
+
+	} else {
+		$(".navbar").removeClass("scroll-fixed-navbar",100);
+	}
+});
+
+
+$('.nav a').on('click', function(){
+    $(".btn-navbar").click(); //bootstrap 2.x
+    $(".navbar-toggle").click() //bootstrap 3.x by Richard
+});
+
+$(window).load(function() {
+  
+  $('#faq-slider').flexslider({
+    animation: "slide",
+    animationLoop: true,
+     directionNav:false
+  });
+
+	$('#features-slider').flexslider({
+    animation: "slide",
+    animationLoop: true,
+    directionNav:false
+  });
+
+	$('#disclaimer-slider').flexslider({
+    animation: "slide",
+    animationLoop: true,
+    directionNav:false
+  });
+
+});
+
+</script>
+{% block scripts %}
+{% endblock %}
+
+</html>
