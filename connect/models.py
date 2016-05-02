@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
+
 class Service(models.Model):
 	user = models.ForeignKey(User, db_index=True)
 	title = models.CharField(max_length=200,)
@@ -124,6 +125,45 @@ class ProblemVote(models.Model):
 def event_delete(sender, instance, **kwargs):
 	instance.image.delete(False)
 	return 
+
+class Book(models.Model):
+	title = models.CharField(max_length=200)
+
+	def __unicode__(self):
+		return self.title
+
+	class Meta:
+		ordering = ('title',)
+
+
+class PhoneNumberDB(models.Model):
+	name = models.CharField(max_length=100, db_index=True)
+	designation = models.CharField(max_length=100)
+	number = models.CharField(db_index=True, max_length=10)		
+	
+	def __unicode__(self):
+		return self.name
+	
+	class Meta:
+		ordering = ('name',)
+
+class BookOrder(models.Model):
+	user = models.ForeignKey(User)
+	approved_by = models.ForeignKey(User, blank=True, null=True, related_name='approved_by')
+	book = models.ForeignKey(Book)
+	is_delivered = models.BooleanField(default=False, help_text='Tick this if the book got delivered')
+	is_approved = models.BooleanField(default=False, help_text='Tick this to approve delivery')	
+	nos = models.IntegerField()	
+	phone = models.CharField(max_length=10, help_text="Phone Number")
+	address = models.CharField(max_length=250, help_text="Guide the delivery boy")
+	 	
+
+
+	def __unicode__(self):
+		return self.book.title
+
+	class Meta:
+		ordering = ('-id',)
 
 
 

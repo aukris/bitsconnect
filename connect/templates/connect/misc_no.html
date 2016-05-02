@@ -1,0 +1,38 @@
+{% extends 'connect/base.html'%}
+
+{% block main %}
+
+<form id="searchform" action="" method="post" accept-charset="utf-8" class='pull-right'>   
+		{%csrf_token%}   
+      <input class="searchfield" name="q" type="text" style='width:200px;' placeholder="Search for a name">
+      <button type='submit' class="glyphicon glyphicon-search " style='border-color:transparent;background:transparent;'></button>
+</form>
+
+
+<div class="container-fluid" style="margin-top:40px;">
+
+	
+	{% if nos %}
+	<ul class="list-group" style='font-size:1.2em;'>
+	{% for x in nos %}
+		
+		<li class="list-group-item" >Name: <span style='color:#ee4b28'>{{x.name}}</span>
+		<br/>
+		Designation: <span style='color:purple;'>{{x.designation}}</span> <br/>
+		Phone:<span style='margin-left:10px;'>{{x.number}}</span>
+		</li>
+		
+	{% endfor %}
+	</ul>
+	{% else %}
+	<div class="panel-group feed-panel-group">
+	<div class="panel panel-default">
+		<div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+	</div>
+	</div>
+	{% endif %}
+		
+	
+
+</div>
+{%endblock main %}

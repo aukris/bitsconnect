@@ -1,0 +1,33 @@
+{%extends 'connect/base.html'%}
+{% block main%}
+<div class="container-fluid" style="margin-top:40px;">
+  
+  {% if orders %}
+  <ul class='list-group'>
+  {% for x in orders %}
+    <li class='list-group-item' >
+    <span class='panel-title' style='font-size:1.4em;'>{{x.book}}</span>
+    <a class="btn btn-danger pull-right" href="{%url 'del_book_orders' x.pk%}">Delete</a>
+    <br>
+    <div style='font-size:1.2em;'>
+    STATUS: 
+    {%if x.is_delivered%}
+    <span class='text-success'> DELIVERED</span>
+    {%elif x.is_approved%}
+    <span class='text-info'> APPROVED</span>
+    {%else%}
+    <span class='text-warning'> WAITING APPROVAL</span>
+    {%endif%}
+    </div>
+    </li>
+    {%endfor%}
+    </ul>    
+    {% else %}
+    <div class="panel-group feed-panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+    </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

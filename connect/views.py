@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 import re
 import textwrap
 from django.utils import timezone
+from django.db.models import Q
 
 
 def auth_logout(request):
@@ -454,5 +455,47 @@ def solve_problem(request, p_id):
 
 				
 	else:
-		return render(request, 'connect/solve_problem.html',context)	
+		return render(request, 'connect/solve_problem.html',context)
 	
+
+@login_required
+def phone_db(request):
+	if request.method == 'POST':
+		nos = PhoneNumberDB.objects.filter(Q(name__startswith=request.POST['q'])| Q(designation__contains=request.POST['q']))
+	else:
+		nos = PhoneNumberDB.objects.all()
+
+	
+	return render(request, 'connect/misc_no.html', {'nos':nos})
+
+
+@login_required
+def book_search(request):
+	if request.method == 'POST':
+		books = Book.objects.filter(title__contains=request.POST['q'])
+	else:
+		books = Book.objects.all()
+	return render(request, 'connect/books.html', {'books':books})
+
+@login_required
+def my_book_orders(request):
+	if request.method == 'POST':
+		phone = request.POST['phone']
+		address = request.POST['address']
+		book = Book.objects.get(id=request.POST['book_id'])
+		nos =  request.POST['nos']
+		BookOrder.objects.create(user=request.user, nos=nos, phone=phone, address=address, book=book)
+		return redirect('my_book_orders')
+	else:
+		return render(request, 'connect/books_order.html', {'orders':BookOrder.objects.filter(user=request.user)})
+
+def del_book_orders(request, bo_id):
+	order = BookOrder.objects.get(pk=bo_id)
+	if order.user == request.user:
+		order.delete()
+	return redirect('my_book_orders')
+
+
+@login_required
+def view_store(request):
+	return render(request, 'connect/store_in_town.html')

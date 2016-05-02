@@ -1,0 +1,87 @@
+{%extends 'connect/base.html'%}
+
+{% block main %}
+
+{% block scripts %}
+<script>
+function orderBook(name, no){
+    $("#current-book-no").val(no)
+    $("#current-book-name").text(name)
+   $("#book-order-form").modal('show') 
+}
+</script>
+{% endblock scripts %}
+
+{% block extra_style %}
+    <style type="text/css">
+        @font-face { font-family: Lato; src: url(fonts/Lato-Reg.ttf); }
+        body {
+            font-family: "Lato", "Helvetica", "sans-serif";
+            color: #333333;
+        }
+    </style>
+{% endblock %}
+
+<form id="searchform" action="" method="post" accept-charset="utf-8" class='pull-right'>   
+        {%csrf_token%}   
+      <input class="searchfield" name="q" type="text" style='width:200px;' placeholder="Search for a Book">
+      <button type='submit' class="glyphicon glyphicon-search " style='border-color:transparent;background:transparent;'></button>
+</form>
+
+<div id="book-order-form" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id='current-book-name' style='overflow-x:hidden;text-overflow:ellipsis;'>Book Name</h4>
+      </div>
+      <div class="modal-body clearfix">
+        <form action="{% url 'my_book_orders' %}" role="form" method="post">
+        {% csrf_token %}
+        <input id='current-book-no' name='book_id' type='text' value="" style='display:none;'>
+            <div class="form-group">
+                <label >Number Of Copies: </label>
+                <input type='number' name='nos' class='form-control' min="1" max="100" value=1 required/>
+            </div>
+
+            <div class="form-group">
+                <label >Phone</label>
+                <input type="text"  placeholder="Phone"  class="form-control" name="phone" maxlength="10" style="resize:none;" required/>
+            </div>
+          
+            <div class="form-group">
+                <label for="user-content">Name and Address</label>
+                <textarea  id="user-content" class="form-control" name="address" maxlength="250" style="resize:none;height:100px;" placeholder="Enter your address here" required></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary pull-right" value='Order Now'>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="container-fluid" style="margin-top:40px;">
+  
+  {% if books %}
+  <ul class='list-group'>
+  {% for x in books %}
+    <li class='list-group-item' style='height:4em;'>
+    <span class='panel-title'>{{x.title}}</span>
+    <button class="btn btn-success pull-right" onclick="orderBook('{{x.title}}', {{x.id}})">Order Now</button>
+    </li>
+    {%endfor%}
+    </ul>    
+    {% else %}
+    <div class="panel-group feed-panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading "><span class="text-info text-justify">Nothing to display.</span></div>
+    </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

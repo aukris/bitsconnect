@@ -1,0 +1,28 @@
+{% extends 'connect/base.html'%}
+
+
+{%load connect_extras %}
+
+{% block main %}
+<form id="searchform" action="{% url 'blog_search_list_view' %}" method="get" accept-charset="utf-8">
+      <button class="searchbutton" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+    </form>
+
+
+
+<div class="container-fluid" style="margin-top:40px;">
+
+  <div class="panel-group feed-panel-group">
+  {% if courses %}
+  {% for x in courses %}
+    <div class="panel panel-default">
+    <div class="panel-heading clearfix"><h3 class="panel-title" >{{x.c_id}}</h3>
+    <span class="text-primary" title="{{s.user.username}}" style="cursor:pointer;">{{s.user.first_name}}</span><i  class="text-success glyphicon glyphicon-earphone call-user" data-user="{{s.user}}"></i>
+    </div>
+    <div class="panel-body">{{x.name|linebreaksbr}}</div>
+    <div class="panel-footer clearfix">
+
+ {% endblock %}      
