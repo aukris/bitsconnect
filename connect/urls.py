@@ -34,5 +34,4 @@ url(r'^books/$', views.book_search,name='book_search'),
 url(r'^books/orders/$', views.my_book_orders,name='my_book_orders'),
 url(r'^books/delete/(?P<bo_id>\d+)/$', views.del_book_orders,name='del_book_orders'),
 url(r'^store/$', views.view_store,name='view_store'),
-url(r'^store/redirect/$', views.store_redirect,name='store_redirect'),
 ]
