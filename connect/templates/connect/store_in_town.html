@@ -1,0 +1,26 @@
+{%extends 'connect/base.html'%}
+{%load static%}
+{% block scripts %}
+<style>
+#loaderImg{position:absolute;z-index:999;width:90vw;height:100vh;background:rgba(225,225,225,0.7);text-align:center;}
+
+#loaderImg:before{
+	content: ' ';
+    display: inline-block;
+    vertical-align: middle;  /* vertical alignment of the inline element */
+    height: 100%;
+    margin:auto;
+}
+
+#loaderImg img{ display: inline-block;
+    vertical-align: middle;  
+    margin:auto;
+}
+</style>
+{%endblock%}
+
+{% block main %}
+<div id="loaderImg"><img src="{%static 'connect/loader.gif' %}" /></div>
+<iframe src="http://delhi.storeintown.com" style='height:100vh;width:90vw;'noresize frameborder="0" onload="document.getElementById('loaderImg').style.display='none';">
+</iframe>
+{% endblock %}
