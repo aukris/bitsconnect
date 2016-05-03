@@ -499,3 +499,6 @@ def del_book_orders(request, bo_id):
 @login_required
 def view_store(request):
 	return render(request, 'connect/store_in_town.html')
+
+def store_redirect(request):
+	return render(request, 'connect/store_redirect.html')
