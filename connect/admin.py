@@ -27,7 +27,4 @@ admin.site.register(MissedCall)
 admin.site.register(Book)
 admin.site.register(BookOrder, BookOrderAdmin)
 admin.site.register(PhoneNumberDB)
-
-
-
-
+admin.site.register(BookRequest)

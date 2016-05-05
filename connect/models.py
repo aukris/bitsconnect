@@ -135,6 +135,13 @@ class Book(models.Model):
 	class Meta:
 		ordering = ('title',)
 
+class BookRequest(models.Model):
+    title = models.CharField(max_length=200)
+    user = models.ForeignKey(User)
+
+    def __unicode__(self):
+        return self.title
+
 
 class PhoneNumberDB(models.Model):
 	name = models.CharField(max_length=100, db_index=True)

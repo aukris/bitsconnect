@@ -32,6 +32,7 @@ url(r'^my-ads/$', views.my_classifieds,name='myads'),
 url(r'^yellow_pages/$', views.phone_db,name='phone_db'),
 url(r'^books/$', views.book_search,name='book_search'),
 url(r'^books/orders/$', views.my_book_orders,name='my_book_orders'),
+url(r'^books/request/$', views.book_request_view,name='book_request_view'),
 url(r'^books/delete/(?P<bo_id>\d+)/$', views.del_book_orders,name='del_book_orders'),
 url(r'^store/$', views.view_store,name='view_store'),
 ]

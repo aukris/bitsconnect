@@ -461,7 +461,7 @@ def solve_problem(request, p_id):
 @login_required
 def phone_db(request):
 	if request.method == 'POST':
-		nos = PhoneNumberDB.objects.filter(Q(name__startswith=request.POST['q'])| Q(designation__contains=request.POST['q']))
+		nos = PhoneNumberDB.objects.filter(Q(name__istartswith=request.POST['q'])| Q(designation__icontains=request.POST['q']))
 	else:
 		nos = PhoneNumberDB.objects.all()
 
@@ -472,7 +472,7 @@ def phone_db(request):
 @login_required
 def book_search(request):
 	if request.method == 'POST':
-		books = Book.objects.filter(title__contains=request.POST['q'])
+		books = Book.objects.filter(title__icontains=request.POST['q'])
 	else:
 		books = Book.objects.all()
 	return render(request, 'connect/books.html', {'books':books})
@@ -499,3 +499,11 @@ def del_book_orders(request, bo_id):
 @login_required
 def view_store(request):
 	return render(request, 'connect/store_in_town.html')
+
+@login_required
+def book_request_view(request):
+    title =  request.POST['title']
+    title = str(title)
+    title.replace("'",'"')
+    BookRequest.objects.create(user=request.user, title=title)
+    return HttpResponse(1, status=200)
