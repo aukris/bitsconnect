@@ -97,7 +97,7 @@
   {% if books %}
   <ul class='list-group'>
   {% for x in books %}
-    <li class='list-group-item' style='height:20vh;'>
+    <li class='list-group-item' style='height:12vh;'>
     <span class='panel-title book-results-title'>{{x.title}}</span>
     <button class="btn btn-success pull-right" onclick="orderBook('{{x.title}}', {{x.id}})">Order Now</button>
     </li>
