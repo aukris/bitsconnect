@@ -3,3 +3,4 @@
 media/
 .idea/
 static/
+*.sqlite3
