@@ -196,7 +196,7 @@ $.ajaxSetup({
             <li><a href="{% url 'mytravel' %}">My Travel</a></li>
           </ul>
         </li>
-
+{% comment %}
         <li  class="dropdown {% navactive request 'book_search my_book_orders' %}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Books<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span></a>
           <ul class="dropdown-menu forAnimate" role="menu">
@@ -204,9 +204,10 @@ $.ajaxSetup({
             <li><a href="{% url 'my_book_orders' %}">My Orders</a></li>
           </ul>
         </li>
-    <!--
+
+
         <li class="{% navactive request 'view_store' %}"><a href="http://bitsconnect.pythonanywhere.com/store">Store In Town<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart"></span></a></li>
-        -->
+{%endcomment %}
                 
         <li class="{% navactive request 'calendar' %}"><a href="{% url 'calendar' %}">Calendar<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a></li>
 

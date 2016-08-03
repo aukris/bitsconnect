@@ -4,6 +4,20 @@ from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
 
+
+class UserFacebookData(models.Model):
+    class Meta:
+        get_latest_by = "pk"
+        ordering = ['-pk']
+        verbose_name_plural = "User Facebook Data"
+        verbose_name = "User Facebook Data"
+    user_profile = models.ForeignKey(User)
+    uid = models.TextField()
+    extra_data = models.TextField(blank=True)
+    token = models.TextField()
+
+
+
 class Service(models.Model):
 	user = models.ForeignKey(User, db_index=True)
 	title = models.CharField(max_length=200,)

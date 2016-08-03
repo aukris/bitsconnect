@@ -3,6 +3,8 @@
 {% load static from staticfiles %}
 
 
+
+
 {% block modals %}
 
 
@@ -30,7 +32,16 @@
 			<input type="submit" class="pull-right btn btn-primary  col-md-2" value="Login"  >
 			</div>
 			</form>
-		
+          <div>
+              <br/>
+            <p style="text-align: center;font-weight: bold;color: red;">FB login for first year students</p>
+            <a  onclick="checkFbLoginState();" style="position:relative;left:23%;height:30px;width:60px">
+             <img src="http://i.stack.imgur.com/ZW4QC.png" alt="Facebook Login"/>
+            </a>
+
+          </div>
+
+
 
 					
 			
@@ -56,6 +67,7 @@
         <form method="post" role="form" action="{% url 'register' %}" id="register-form" >
 			{% csrf_token %}
 			<div class="form-group">
+             <input type="text" name="signup_method" value="email" style="display:none;"/>
 			<input type="text"   class="form-control" id="register-username" name="username" placeholder="Username ex.f2014403" required/>
 			</div>
 			<div class="form-group"> 
@@ -105,6 +117,86 @@
 
 			
 {% block scripts%}
+
+<script src="//connect.facebook.net/en_US/sdk.js"></script>
+
+<script>
+
+  function statusFbCallback(response) {
+      console.log(response)
+    if (response.status === 'connected') {
+      FbBitsConnect(response.authResponse.accessToken)
+    } else if (response.status === 'not_authorized') {
+        fbLogin()
+
+    } else {
+        fbLogin()
+    }
+  }
+
+
+  function checkFbLoginState() {
+      console.log('wtf')
+    FB.getLoginStatus(function(response) {
+      statusFbCallback(response);
+    });
+  }
+
+function fbLogin(){
+  FB.login(function(response) {
+      console.log(response)
+  if (response.status === 'connected') {
+    FbBitsConnect(response.authResponse.accessToken)
+  } else if (response.status === 'not_authorized') {
+    console.log('Failed to login to BITS connect on fb')
+  } else {
+    console.log('FB login returned unknown')
+  }
+}, {scope: 'public_profile,email'});
+}
+
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1132792360127508',
+    cookie     : true,
+    xfbml      : true,
+    version    : 'v2.5'
+  });
+  };
+
+  function FbBitsConnect(token) {
+      console.log('Fb BITS connect')
+    var dat = {signup_method: "facebook", access_token:token };
+        $.ajax({
+            type: "POST",
+            url: '{% url 'register' %}',
+            data: dat,
+            beforeSend: function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (data) {
+                window.location = '/'
+            },
+            error: function (data){
+                data = data.responseText
+                console.log(data)
+            if(data == '0'){
+                $("#error-text-login").text("Email already exists")
+            }
+
+            else{
+                $("#error-text-login").text("Unknown error. Please try again later.")
+            }
+
+            }
+            });
+}
+
+</script>
+
+
+
 <script>
 $("#forgot-pass-btn").click(function(e){
 	$("#loginModal").modal('hide')
