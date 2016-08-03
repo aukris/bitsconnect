@@ -1,8 +1,8 @@
 *.pyc
 *~
-media/
+media/*
 .idea/
-static/
+static/*
 *.sqlite3
 stunnel/
 runserver
