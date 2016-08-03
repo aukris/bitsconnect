@@ -5,5 +5,4 @@ media/
 static/
 *.sqlite3
 stunnel/
-stunnel.log
 runserver
