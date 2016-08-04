@@ -123,7 +123,6 @@
 <script>
 
   function statusFbCallback(response) {
-      console.log(response)
     if (response.status === 'connected') {
       FbBitsConnect(response.authResponse.accessToken)
     } else if (response.status === 'not_authorized') {
@@ -136,7 +135,6 @@
 
 
   function checkFbLoginState() {
-      console.log('wtf')
     FB.getLoginStatus(function(response) {
       statusFbCallback(response);
     });
@@ -144,7 +142,6 @@
 
 function fbLogin(){
   FB.login(function(response) {
-      console.log(response)
   if (response.status === 'connected') {
     FbBitsConnect(response.authResponse.accessToken)
   } else if (response.status === 'not_authorized') {
@@ -166,7 +163,6 @@ function fbLogin(){
   };
 
   function FbBitsConnect(token) {
-      console.log('Fb BITS connect')
     var dat = {signup_method: "facebook", access_token:token };
         $.ajax({
             type: "POST",
@@ -180,7 +176,7 @@ function fbLogin(){
             },
             error: function (data){
                 data = data.responseText
-                console.log(data)
+
             if(data == '0'){
                 $("#error-text-login").text("Email already exists")
             }

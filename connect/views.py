@@ -12,8 +12,8 @@ import re
 import textwrap
 from django.utils import timezone
 from django.db.models import Q
-import urllib3, json
-
+import  json
+import requests
 
 def auth_logout(request):
     logout(request)
@@ -56,10 +56,9 @@ def auth_register(request):
                     raise Http404("Please provide the necessary details to register.")
         elif method == 'facebook':
             access_token = request.POST['access_token']
-            http = urllib3.PoolManager()
-            file_ = http.request('GET',
+            file_ = requests.get(
                 "https://graph.facebook.com/me?access_token=" + access_token + '&fields=email,first_name,last_name')
-            ret = json.loads(file_.data)
+            ret = file_.json()
             uid_ = ret['id']
             try:
                 email = ret['email']
